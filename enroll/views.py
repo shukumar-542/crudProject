@@ -1,5 +1,4 @@
-import re
-from django.shortcuts import render
+from django.shortcuts import  render,HttpResponseRedirect
 from .forms import studentRegistration
 from .models import User
 
@@ -19,3 +18,24 @@ def addshow(request):
       student = User.objects.all()
 
       return render(request, 'enroll/addandshow.html',{'form':fm, 'student':student})
+
+def update_data(request, id):
+      if request.method == 'POST':
+            user =User.objects.get(pk =id)
+            fm = studentRegistration(request.POST,instance=user)
+            if fm.is_valid():
+                  fm.save()
+            return HttpResponseRedirect('/')
+      else:
+            user =User.objects.get(pk=id)
+            fm =studentRegistration(instance=user)
+
+      return render(request,'enroll/update.html',{'form':fm})
+
+
+def delete_data(request,id):
+      if request.method == 'POST':
+            user =User.objects.get(pk=id)
+            user.delete()
+      
+      return HttpResponseRedirect('/')

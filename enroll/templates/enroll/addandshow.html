@@ -32,9 +32,12 @@
                         <td>{{stu.email}}</td>
                         <td>{{stu.password}}</td>
                         <td>
-                              <a href="#" class='btn btn-warning btn-sm'>Edit</a>
-                              <a href="#" class='btn btn-danger btn-sm'>Delete</a>
-
+                              <a href="{% url 'updateData' stu.id %}" class='btn btn-warning btn-sm'>Edit</a>
+                              <form action="{% url 'deleteData' stu.id %}" class='d-inline ' method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class='btn btn-danger btn-sm' value="delete">
+                              </form>
+          
                         </td>
                       </tr>
                     {% endfor %}
